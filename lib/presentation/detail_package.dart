@@ -1,4 +1,5 @@
 import 'package:fitivation_app/components/header_homepage.dart';
+import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
 import 'package:fitivation_app/components/my_button.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/models/package.model.dart';
@@ -64,9 +65,9 @@ class DetailPackage extends StatelessWidget {
                         ]),
                     child: GestureDetector(
                       onTap: () async {
-                        // bool check =
-                        //     await addToCart(packages![index].id.toString());
-                        if (true) {
+                        bool check =
+                            await addToCart(packages![index].id.toString());
+                        if (check) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -107,6 +108,9 @@ class DetailPackage extends StatelessWidget {
                                     color: Color(0xff000000)),
                               ),
                               Text(
+                                'Giảm ${packages![index].discount! * 100} %',
+                              ),
+                              Text(
                                 'Tổng ${MoneyFormatter(amount: ((packages![index].basePrice ?? 0) * (1 - (packages![index].discount ?? 0)) * (packages![index].type ?? 0)).toDouble()).output.withoutFractionDigits} đồng',
                                 style: TextStyle(
                                     fontSize: 16, color: Color(0xff000000)),
@@ -124,10 +128,9 @@ class DetailPackage extends StatelessWidget {
           // MyButton(onTap: () {}, textButton: "Thêm vào giỏ")
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Tôi')
-      ]),
+      bottomNavigationBar: MyBottomNavigationBar(
+        originState: 0,
+      ),
     );
   }
 }

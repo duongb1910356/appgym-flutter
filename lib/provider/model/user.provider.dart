@@ -12,4 +12,14 @@ class UserProvider with ChangeNotifier {
     _user = User.fromJson(currentUser);
     notifyListeners();
   }
+
+  void updateUser(User newUser) {
+    _user = newUser;
+    notifyListeners();
+  }
+
+  void clearData() {
+    _user = new User();
+    notifyListeners(); // Thông báo cho các Widget nghe lưu trữ Provider để cập nhật
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:dio/src/response.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
 import 'package:fitivation_app/components/item_component.dart';
+import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
+import 'package:fitivation_app/components/square_tile.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/models/user.model.dart';
 import 'package:fitivation_app/presentation/detail_page.dart';
@@ -11,7 +13,6 @@ import 'package:fitivation_app/shared/store.service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class FitivationPage extends StatefulWidget {
@@ -35,13 +36,13 @@ class _FitivationState extends State<FitivationPage> {
   }
 
   void _initializeData() async {
+    // Fetch và lưu thông tin người dùng
+    await fetchAndSaveUser(context);
+
     // Lấy vị trí địa lý
     final position = await _determinePosition();
     lat = position.latitude;
     long = position.longitude;
-
-    // Fetch và lưu thông tin người dùng
-    await fetchAndSaveUser(context);
 
     // Lấy danh sách cơ sở gần đây và cập nhật trạng thái của widget
     final result =
@@ -105,6 +106,7 @@ class _FitivationState extends State<FitivationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: SquareTile(imagePath: 'lib/assets/logo_app_gym.png'),
         title: Container(
           child: HeaderHomePage(),
         ),
@@ -123,10 +125,9 @@ class _FitivationState extends State<FitivationPage> {
                   });
             }),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Tôi')
-      ]),
+      bottomNavigationBar: MyBottomNavigationBar(
+        originState: 0,
+      ),
     );
   }
 }

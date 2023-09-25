@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:fitivation_app/components/comment.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
+import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
 import 'package:fitivation_app/components/my_button.dart';
 import 'package:fitivation_app/components/review_summary.dart';
 import 'package:fitivation_app/components/square_tile.dart';
@@ -104,8 +105,6 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
         ),
       };
     });
-
-    print("LOCATION >>> ${facility?.location['coordinates'][0]}");
 
     await _determinePosition();
   }
@@ -418,11 +417,8 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
               ],
             ),
           ),
-          bottomNavigationBar: BottomNavigationBar(items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline), label: 'Tôi')
-          ]),
+          bottomNavigationBar: MyBottomNavigationBar(
+            originState: 0,
+          ),
         );
 }

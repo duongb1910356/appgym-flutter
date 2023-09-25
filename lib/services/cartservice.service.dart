@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:fitivation_app/models/cart.model.dart';
 import 'package:fitivation_app/shared/api.dart';
@@ -15,8 +13,8 @@ class CartService {
     try {
       String endpoint = '$baseUrl/add_item';
       print("endpoint $endpoint");
-      final Response response =
-          await api.patch(endpoint, {"packageId": packageId, "quantity": 1});
+      final Response response = await api
+          .patch(endpoint, body: {"packageId": packageId, "quantity": 1});
       final jsonData = response.data;
       if (jsonData != null) {
         return true;
@@ -40,6 +38,40 @@ class CartService {
       return cart;
     } catch (ex) {
       print('Error get cart: ${ex}');
+      return null;
+    }
+  }
+
+  Future<Cart?> deleteItemfromCart(String itemId) async {
+    try {
+      String endpoint = '$baseUrl/delete_item/$itemId';
+      Cart? cart;
+      print("endpoint $endpoint");
+      final Response response = await api.patch(endpoint);
+      final jsonData = response.data;
+      if (jsonData != null) {
+        cart = Cart.fromJson(jsonData);
+      }
+      return cart;
+    } catch (ex) {
+      print('Error delete package from cart: ${ex}');
+      return null;
+    }
+  }
+
+  Future<Cart?> deleteAllItemfromCart() async {
+    try {
+      String endpoint = '$baseUrl/delete_all_item';
+      Cart? cart;
+      print("endpoint $endpoint");
+      final Response response = await api.patch(endpoint);
+      final jsonData = response.data;
+      if (jsonData != null) {
+        cart = Cart.fromJson(jsonData);
+      }
+      return cart;
+    } catch (ex) {
+      print('Error delete all package from cart: ${ex}');
       return null;
     }
   }

@@ -24,10 +24,6 @@ class _LoginState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void signIn(BuildContext context) async {
-    setState(() {
-      _isLoading = true;
-    });
-
     final username = usernameController.text;
     final password = passwordController.text;
 
@@ -36,10 +32,13 @@ class _LoginState extends State<LoginPage> {
           description: 'Tên đăng nhập và mật khẩu không được để trống');
     }
 
+    setState(() {
+      _isLoading = true;
+    });
+
     final user = await authService.signIn(username, password, context);
 
     if (user != null) {
-      print("User ${user.displayName}");
       navigateToFitivationPage(context);
     } else {
       setState(() {
@@ -106,7 +105,7 @@ class _LoginState extends State<LoginPage> {
                 MyTextField(
                     controller: passwordController,
                     hintText: 'Password',
-                    obscureText: false),
+                    obscureText: true),
                 const SizedBox(
                   height: 10,
                 ),

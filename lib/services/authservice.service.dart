@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/models/user.model.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
+import 'package:fitivation_app/services/payment.service.dart';
 import 'package:fitivation_app/shared/API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,33 +15,37 @@ import 'package:provider/provider.dart';
 class AuthService {
   final String baseUrl = "${dotenv.env['BASE_URL']}/api/auth";
   final API api = API();
+  final PaymentService paymentService = PaymentService();
 
   AuthService();
 
   Future<User?> signUp(BuildContext context, String username, String email,
       String password, String displayName, String role) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/signup'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'username': username,
-          'email': email,
-          'password': password,
-          'role': [role],
-          'displayName': displayName
-        }),
-      );
+      String endpoint = '$baseUrl/signup';
 
-      final jsonData = jsonDecode(response.body);
+      Map<String, dynamic> body = {
+        'username': username,
+        'email': email,
+        'password': password,
+        'role': [role],
+        'displayName': displayName
+      };
+
+      final Response response = await api.post(endpoint, body: body);
+      final jsonData = response.data;
+      await api.saveToken(jsonData);
+
+      final tempCustomer = await paymentService.createCustomerStripe();
+      jsonData["customerIdStripe"] = tempCustomer['id'];
+      await api.saveToken(jsonData);
 
       // ignore: use_build_context_synchronously
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.login(jsonData);
       return User.fromJson(jsonData);
     } catch (ex) {
-      // ignore: use_build_context_synchronously
-      ErrorHandler.handleHttpError(context, ex);
+      print("đăng ký thất bại trả về null");
       return null;
     }
   }
@@ -55,7 +60,7 @@ class AuthService {
         'password': password,
       };
 
-      final Response response = await api.post(endpoint, body);
+      final Response response = await api.post(endpoint, body: body);
 
       final jsonData = response.data;
       await api.saveToken(jsonData);
@@ -77,7 +82,7 @@ class AuthService {
       String endpoint = '$baseUrl/refreshtoken';
 
       final Response response =
-          await api.post(endpoint, {refreshToken: refreshToken});
+          await api.post(endpoint, body: {refreshToken: refreshToken});
       final jsonData = response.data;
       await api.saveToken(jsonData);
       return true;

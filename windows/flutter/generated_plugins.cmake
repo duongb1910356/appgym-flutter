@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  file_selector_windows
   geolocator_windows
   maps_launcher
   permission_handler_windows

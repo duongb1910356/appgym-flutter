@@ -1,3 +1,6 @@
+import 'package:fitivation_app/presentation/fitivation_page.dart';
+import 'package:fitivation_app/presentation/profile_page.dart';
+import 'package:fitivation_app/presentation/update_profile_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fitivation_app/presentation/splash_screen.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
@@ -27,11 +30,18 @@ void main() async {
         ),
       );
   Stripe.publishableKey = dotenv.env['PUBLIC_KEY_STRIPE']!;
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Map<String, WidgetBuilder> routes = {
+    '/home': (context) => FitivationPage(),
+    '/me': (context) => ProfileScreen(),
+    '/signin': (context) => SplashScreen(),
+    '/update_profile': (context) => UpdateProfileScreen(),
+  };
+
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -53,8 +63,10 @@ class MyApp extends StatelessWidget {
                     height: 1.5,
                     color: Color(0xff000000)))),
         // home: RegisterPage(),
-        home: const SplashScreen(),
+        // home: const SplashScreen(),
         // home: FitivationPage(),
+        initialRoute: '/signin',
+        routes: routes,
       ),
     );
   }
@@ -85,8 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> requestLocationPermission() async {
     final status = await Permission.location.request();
     if (status.isGranted) {
-      // Quyền truy cập vị trí đã được cấp
-      // Bạn có thể thực hiện các tác vụ liên quan đến vị trí ở đây
       print("Location accessable");
     } else {
       print("Location inaccessable");

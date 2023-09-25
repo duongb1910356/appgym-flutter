@@ -29,9 +29,11 @@ class API {
     }
   }
 
-  Future<Response> post(String endpoint, Map<String, dynamic> body) async {
+  Future<Response> post(String endpoint,
+      {Map<String, dynamic>? body, Map<String, dynamic>? requestParams}) async {
     try {
-      final response = await _dio.post(endpoint, data: body);
+      final response =
+          await _dio.post(endpoint, data: body, queryParameters: requestParams);
       return response;
     } catch (error) {
       print('Error dio call API: $error');
@@ -39,7 +41,20 @@ class API {
     }
   }
 
-  Future<Response> patch(String endpoint, Map<String, dynamic> body) async {
+  Future<Response> patchWithFile(String endpoint,
+      {dynamic body, Map<String, dynamic>? requestParams}) async {
+    try {
+      final response = await _dio.patch(endpoint,
+          data: body, queryParameters: requestParams);
+      return response;
+    } catch (error) {
+      print('Error dio call API: $error');
+      throw error;
+    }
+  }
+
+  Future<Response> patch(String endpoint,
+      {Map<String, dynamic>? body = const {}}) async {
     try {
       final response = await _dio.patch(endpoint, data: body);
       return response;

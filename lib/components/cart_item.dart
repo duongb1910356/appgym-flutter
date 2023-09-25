@@ -5,8 +5,9 @@ import 'package:money_formatter/money_formatter.dart';
 
 class CartItem extends StatelessWidget {
   final Item item;
+  Function()? deleteItemFromCart;
 
-  CartItem({required this.item});
+  CartItem({required this.item, required this.deleteItemFromCart});
 
   @override
   Widget build(BuildContext context) {
@@ -72,16 +73,19 @@ class CartItem extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text('(1 tháng)'),
+                    Text('(${item.packageFacility?.type} tháng)'),
                   ],
                 ),
               ],
             ),
           ),
-          Container(
-            width: 12,
-            height: 12,
-            child: Icon(Icons.close),
+          GestureDetector(
+            onTap: deleteItemFromCart,
+            child: Container(
+              width: 12,
+              height: 12,
+              child: Icon(Icons.close),
+            ),
           ),
         ],
       ),
