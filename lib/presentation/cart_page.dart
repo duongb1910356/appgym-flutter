@@ -4,7 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fitivation_app/components/cart_item.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
-import 'package:fitivation_app/components/my_button.dart';
+import 'package:fitivation_app/components/shared/my_button.dart';
 import 'package:fitivation_app/models/cart.model.dart';
 import 'package:fitivation_app/presentation/loading_page.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';

@@ -1,14 +1,12 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:fitivation_app/components/my_button.dart';
-import 'package:fitivation_app/components/my_droplist.dart';
-import 'package:fitivation_app/components/my_textfield.dart';
-import 'package:fitivation_app/components/square_tile.dart';
+import 'package:fitivation_app/components/shared/my_button.dart';
+import 'package:fitivation_app/components/shared/my_droplist.dart';
+import 'package:fitivation_app/components/shared/my_textfield.dart';
+import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/presentation/fitivation_page.dart';
 import 'package:fitivation_app/presentation/loading_page.dart';
 import 'package:fitivation_app/presentation/login_page.dart';
 import 'package:fitivation_app/services/authservice.service.dart';
-import 'package:fitivation_app/services/payment.service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {

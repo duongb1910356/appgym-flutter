@@ -1,6 +1,6 @@
-import 'package:fitivation_app/components/my_button.dart';
-import 'package:fitivation_app/components/my_textfield.dart';
-import 'package:fitivation_app/components/square_tile.dart';
+import 'package:fitivation_app/components/shared/my_button.dart';
+import 'package:fitivation_app/components/shared/my_textfield.dart';
+import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/presentation/fitivation_page.dart';
 import 'package:fitivation_app/presentation/loading_page.dart';

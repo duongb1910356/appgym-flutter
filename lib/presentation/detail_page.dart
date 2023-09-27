@@ -5,9 +5,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:fitivation_app/components/comment.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
-import 'package:fitivation_app/components/my_button.dart';
+import 'package:fitivation_app/components/shared/my_button.dart';
 import 'package:fitivation_app/components/review_summary.dart';
-import 'package:fitivation_app/components/square_tile.dart';
+import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/models/package.model.dart';
 import 'package:fitivation_app/models/review.model.dart';

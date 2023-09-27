@@ -11,6 +11,7 @@ class User {
   String? phone;
   dynamic sex;
   String? customerIdStripe;
+  String? accountIdStripe;
 
   User(
       {this.accessToken,
@@ -24,7 +25,8 @@ class User {
       this.birth,
       this.phone,
       this.sex,
-      this.customerIdStripe});
+      this.customerIdStripe,
+      this.accountIdStripe});
 
   User.fromJson(Map<String, dynamic> json) {
     accessToken = json["accessToken"];
@@ -39,6 +41,7 @@ class User {
     phone = json["phone"];
     sex = json["sex"];
     customerIdStripe = json["customerIdStripe"];
+    accountIdStripe = json["accountIdStripe"];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +60,7 @@ class User {
     _data["phone"] = phone;
     _data["sex"] = sex;
     _data["customerIdStripe"] = customerIdStripe;
+    _data["accountIdStripe"] = accountIdStripe;
     return _data;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:fitivation_app/components/header_homepage.dart';
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
-import 'package:fitivation_app/components/my_button.dart';
+import 'package:fitivation_app/components/shared/my_button.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/models/package.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';

@@ -4,10 +4,16 @@ class Store {
   const Store._();
   static const String _accessTokenKey = "accessToken";
   static const String _refreshTokenKey = "refreshToken";
+  static const String _permission = "permission";
 
   static Future<void> setToken(String token) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString(_accessTokenKey, token);
+  }
+
+  static Future<void> setPermission(bool status) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(_permission, status);
   }
 
   static Future<void> removeKey(String key) async {
@@ -18,6 +24,11 @@ class Store {
   static Future<String?> getToken() async {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getString(_accessTokenKey);
+  }
+
+  static Future<bool?> getPermission() async {
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(_permission);
   }
 
   static Future<void> setRefreshToken(String token) async {

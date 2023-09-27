@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fitivation_app/models/accountlink.model.dart';
 import 'package:fitivation_app/shared/api.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -31,7 +32,6 @@ class PaymentService {
   Future<String?> getEphemeralKey(String customerId) async {
     try {
       String endpoint = '$baseUrl/create_ephemeral_key';
-      print("endpoint $endpoint customerId: $customerId");
       final Response response =
           await api.post(endpoint, requestParams: {'customerId': customerId});
       final jsonData = response.data;
@@ -45,14 +45,28 @@ class PaymentService {
   Future<dynamic> createCustomerStripe() async {
     try {
       String endpoint = '$baseUrl/create_customer';
-      print("endpoint $endpoint");
       final Response response = await api.post(endpoint);
       final jsonData = response.data;
-      print("jsonData of customer: >> $jsonData");
 
       return jsonData;
     } catch (ex) {
       print('Error create customer stripe: ${ex}');
+      return null;
+    }
+  }
+
+  Future<AccountLink?> createAccountConnectStripe() async {
+    //Return account link stripe
+    try {
+      String endpoint = '$baseUrl/create_connect_account';
+      print("endpoint $endpoint");
+      final Response response = await api.post(endpoint);
+      final jsonData = response.data;
+      print("jsonData of account: >> $jsonData");
+
+      return AccountLink.fromJson(jsonData);
+    } catch (ex) {
+      print('Error create account stripe: ${ex}');
       return null;
     }
   }

@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:fitivation_app/presentation/fitivation_page.dart';
+import 'package:fitivation_app/presentation/login_page.dart';
 import 'package:fitivation_app/presentation/profile_page.dart';
 import 'package:fitivation_app/presentation/update_profile_page.dart';
+import 'package:fitivation_app/provider/model/config.provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fitivation_app/presentation/splash_screen.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
@@ -8,8 +12,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final PendingDynamicLinkData? initialLink =
+      await FirebaseDynamicLinks.instance.getInitialLink();
+  if (initialLink != null) {
+    final Uri deepLink = initialLink.link;
+    // Example of using the dynamic link to push the user to a different screen
+    handleDeepLink(initialLink.link);
+  }
+  FirebaseDynamicLinks.instance.onLink.listen(
+    (pendingDynamicLinkData) {
+      if (pendingDynamicLinkData != null) {
+        final Uri deepLink = pendingDynamicLinkData.link;
+        print("deeplink: $deepLink");
+      }
+    },
+  );
+
   await dotenv.load();
   ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
         body: Center(
@@ -30,7 +53,14 @@ void main() async {
         ),
       );
   Stripe.publishableKey = dotenv.env['PUBLIC_KEY_STRIPE']!;
-  runApp(MyApp());
+  runApp(MyApp(initialLink));
+}
+
+void handleDeepLink(Uri deepLink) {
+  if (deepLink.path == '/complete_account_link') {
+    // Điều hướng đến màn hình ProfileScreen
+    N
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -41,13 +71,16 @@ class MyApp extends StatelessWidget {
     '/update_profile': (context) => UpdateProfileScreen(),
   };
 
-  MyApp({super.key});
+  MyApp(PendingDynamicLinkData? initialLink, {super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (ctx) => UserProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => PermissionProvider()),
+        ChangeNotifierProvider(create: (ctx) => UserProvider())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

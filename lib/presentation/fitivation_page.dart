@@ -2,7 +2,7 @@ import 'package:dio/src/response.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
 import 'package:fitivation_app/components/item_component.dart';
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
-import 'package:fitivation_app/components/square_tile.dart';
+import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/models/user.model.dart';
 import 'package:fitivation_app/presentation/detail_page.dart';

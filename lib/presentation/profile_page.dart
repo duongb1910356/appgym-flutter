@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
 import 'package:fitivation_app/components/my_menu_profile.dart';
+import 'package:fitivation_app/components/shared/switch_button.dart';
 import 'package:fitivation_app/presentation/history_bill.dart';
 import 'package:fitivation_app/presentation/login_page.dart';
 import 'package:fitivation_app/presentation/profile_detail_page.dart';
 import 'package:fitivation_app/presentation/update_profile_page.dart';
+import 'package:fitivation_app/provider/model/config.provider.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
 import 'package:fitivation_app/shared/store.service.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +132,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => LoginPage()));
                   },
+                ),
+                ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.blue[50],
+                    ),
+                    child: Icon(
+                      Icons.manage_history_rounded,
+                      color: Colors.black,
+                    ),
+                  ),
+                  title: Text('Trở thành chủ quản lý'),
+                  trailing: SwitchExample(
+                    taskSwitch: () {
+                      PermissionProvider permissionProvider =
+                          Provider.of<PermissionProvider>(context,
+                              listen: false);
+
+                      permissionProvider.togglePermission();
+                    },
+                  ),
                 ),
               ]),
         ),
