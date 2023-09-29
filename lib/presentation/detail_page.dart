@@ -69,10 +69,10 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
       });
     });
     Fitivation? temp = await fitivationService.getFitivationById(facilityId);
-    List<PackageFacility>? tempPackages =
-        await packageService.getPackageOfFacilityId(facilityId);
-    Schedule? tempSchedule =
-        await fitivationService.getScheduleByFacilityId(facilityId);
+    // List<PackageFacility>? tempPackages =
+    //     await packageService.getPackageOfFacilityId(facilityId);
+    // Schedule? tempSchedule =
+    //     await fitivationService.getScheduleByFacilityId(facilityId);
 
     dynamic reviewSummaryTemp =
         await reviewService.getReviewSummary(facilityId);
@@ -83,12 +83,12 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
     setState(() {
       facility = temp;
     });
-    setState(() {
-      packages = tempPackages;
-    });
-    setState(() {
-      schedule = tempSchedule;
-    });
+    // setState(() {
+    //   packages = tempPackages;
+    // });
+    // setState(() {
+    //   schedule = tempSchedule;
+    // });
     setState(() {
       reviewSummary = reviewSummaryTemp;
     });
@@ -245,43 +245,43 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailPackage(packages: packages),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 39.74, 0),
-                                    constraints: BoxConstraints(
-                                      maxWidth: 159,
-                                    ),
-                                    child: Text('Gói định kỳ chỉ'),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
-                                    child: Text(
-                                      '${packages?[0].basePrice} đồng/tháng',
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w600,
-                                          height: 1.5,
-                                          color: const Color(0xff000000)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             DetailPackage(packages: packages),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: Row(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceAround,
+                            //     children: [
+                            //       Container(
+                            //         margin: EdgeInsets.fromLTRB(0, 0, 39.74, 0),
+                            //         constraints: BoxConstraints(
+                            //           maxWidth: 159,
+                            //         ),
+                            //         child: Text('Gói định kỳ chỉ'),
+                            //       ),
+                            //       Container(
+                            //         margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                            //         child: Text(
+                            //           '${packages?[0].basePrice} đồng/tháng',
+                            //           style: const TextStyle(
+                            //               fontSize: 16,
+                            //               fontFamily: 'Poppins',
+                            //               fontWeight: FontWeight.w600,
+                            //               height: 1.5,
+                            //               color: const Color(0xff000000)),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             Text(
                               'Xem thêm >',
                               style: TextStyle(
@@ -315,51 +315,52 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
                       Divider(
                         thickness: 2,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (schedule != null)
-                            Text(
-                              "Lịch hoạt động",
-                              style: Theme.of(context).textTheme.displayLarge,
-                            ),
-                          if (schedule != null &&
-                              schedule?.openTimes?.length != 0)
-                            ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: schedule != null
-                                    ? (schedule?.openTimes?.length ?? 0)
-                                    : 0,
-                                itemBuilder: (BuildContext context, index) {
-                                  final openTime = schedule!.openTimes![index];
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 80),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "${openTime.dayOfWeek ?? 'Không có dữ liệu'}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displayLarge,
-                                        ),
-                                        Text(
-                                          "${openTime.shiftTimes?[0].startTime} - ${openTime.shiftTimes?[0].endTime}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
-                        ],
-                      ),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     if (schedule != null)
+                      //       Text(
+                      //         "Lịch hoạt động",
+                      //         style: Theme.of(context).textTheme.displayLarge,
+                      //       ),
+                      //     if (schedule != null &&
+                      //         schedule?.openTimes?.length != 0)
+                      //       ListView.builder(
+                      //           shrinkWrap: true,
+                      //           itemCount: schedule != null
+                      //               ? (schedule?.openTimes?.length ?? 0)
+                      //               : 0,
+                      //           itemBuilder: (BuildContext context, index) {
+                      //             final openTime = schedule!.openTimes![index];
+                      //             return Padding(
+                      //               padding: const EdgeInsets.symmetric(
+                      //                   horizontal: 80),
+                      //               child: Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+                      //                   Text(
+                      //                     "${openTime.dayOfWeek ?? 'Không có dữ liệu'}",
+                      //                     style: Theme.of(context)
+                      //                         .textTheme
+                      //                         .displayLarge,
+                      //                   ),
+                      //                   Text(
+                      //                     "${openTime.shiftTimes?[0].startTime} - ${openTime.shiftTimes?[0].endTime}",
+                      //                     style: Theme.of(context)
+                      //                         .textTheme
+                      //                         .bodyLarge
+                      //                         ?.copyWith(
+                      //                             fontWeight:
+                      //                                 FontWeight.normal),
+                      //                   )
+                      //                 ],
+                      //               ),
+                      //             );
+                      //           }),
+                      //   ],
+                      // ),
+
                       Divider(
                         thickness: 2,
                       ),
@@ -389,6 +390,11 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
                           onMapCreated: _onMapCreated,
                           initialCameraPosition: CameraPosition(
                               target: _currentPosition!, zoom: 11.0),
+                          onTap: (LatLng latLng) {
+                            print("da tap");
+                            print(
+                                "toa do chon ${latLng.latitude} - ${latLng.longitude}");
+                          },
                         ),
                       ),
                       Padding(
@@ -406,9 +412,10 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
                       Column(
                         //binh luan
                         children: [
-                          Comment(
-                            review: reviews![1],
-                          ),
+                          if (reviews?.length != 0)
+                            Comment(
+                              review: reviews![1],
+                            ),
                         ],
                       ),
                     ],

@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:fitivation_app/models/dvhc.model.dart';
+import 'package:fitivation_app/presentation/complete_account_link.dart';
 import 'package:fitivation_app/presentation/fitivation_page.dart';
 import 'package:fitivation_app/presentation/login_page.dart';
 import 'package:fitivation_app/presentation/profile_page.dart';
+import 'package:fitivation_app/presentation/register_page.dart';
 import 'package:fitivation_app/presentation/update_profile_page.dart';
+import 'package:fitivation_app/provider/model/address.provider.dart';
 import 'package:fitivation_app/provider/model/config.provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fitivation_app/presentation/splash_screen.dart';
@@ -13,57 +17,44 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final PendingDynamicLinkData? initialLink =
-      await FirebaseDynamicLinks.instance.getInitialLink();
-  if (initialLink != null) {
-    final Uri deepLink = initialLink.link;
-    // Example of using the dynamic link to push the user to a different screen
-    handleDeepLink(initialLink.link);
-  }
-  FirebaseDynamicLinks.instance.onLink.listen(
-    (pendingDynamicLinkData) {
-      if (pendingDynamicLinkData != null) {
-        final Uri deepLink = pendingDynamicLinkData.link;
-        print("deeplink: $deepLink");
-      }
-    },
-  );
 
   await dotenv.load();
-  ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FractionallySizedBox(
-                widthFactor: 1.0 / 3.0,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Image.asset('lib/assets/empty.png'),
-                ),
-              ),
-              Text('Có lỗi xảy ra. Vui lòng quay lại!'),
-            ],
-          ),
-        ),
-      );
+  // ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
+  //       body: Center(
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             FractionallySizedBox(
+  //               widthFactor: 1.0 / 3.0,
+  //               child: Align(
+  //                 alignment: Alignment.center,
+  //                 child: Image.asset('lib/assets/empty.png'),
+  //               ),
+  //             ),
+  //             Text('Có lỗi xảy ra. Vui lòng quay lại!'),
+  //           ],
+  //         ),
+  //       ),
+  //     );
   Stripe.publishableKey = dotenv.env['PUBLIC_KEY_STRIPE']!;
-  runApp(MyApp(initialLink));
+  runApp(MyApp());
 }
 
-void handleDeepLink(Uri deepLink) {
-  if (deepLink.path == '/complete_account_link') {
-    // Điều hướng đến màn hình ProfileScreen
-    N
-  }
+class MyApp extends StatefulWidget {
+  MyApp();
+
+  @override
+  State<MyApp> createState() => _MyAppState();
 }
 
-class MyApp extends StatelessWidget {
+class _MyAppState extends State<MyApp> {
   final Map<String, WidgetBuilder> routes = {
     '/home': (context) => FitivationPage(),
     '/me': (context) => ProfileScreen(),
@@ -71,15 +62,13 @@ class MyApp extends StatelessWidget {
     '/update_profile': (context) => UpdateProfileScreen(),
   };
 
-  MyApp(PendingDynamicLinkData? initialLink, {super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (ctx) => PermissionProvider()),
-        ChangeNotifierProvider(create: (ctx) => UserProvider())
+        ChangeNotifierProvider(create: (ctx) => UserProvider()),
+        ChangeNotifierProvider(create: (ctx) => AddressProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -95,11 +84,9 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     height: 1.5,
                     color: Color(0xff000000)))),
-        // home: RegisterPage(),
-        // home: const SplashScreen(),
-        // home: FitivationPage(),
-        initialRoute: '/signin',
-        routes: routes,
+        // initialRoute: '/signin',
+        // routes: routes,
+        home: SplashScreen(),
       ),
     );
   }

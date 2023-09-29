@@ -92,6 +92,7 @@ class _FitivationState extends State<FitivationPage> {
   }
 
   void onTapItemComponent(Fitivation item) {
+    print("onTapItemComponent>> ${item.id}");
     Navigator.push(
       context,
       MaterialPageRoute(

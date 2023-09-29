@@ -1,5 +1,7 @@
+import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/presentation/card_member.dart';
-import 'package:fitivation_app/presentation/manager_page.dart';
+import 'package:fitivation_app/presentation/fitivation_page.dart';
+import 'package:fitivation_app/presentation/manager/manager_page.dart';
 import 'package:fitivation_app/presentation/profile_page.dart';
 import 'package:fitivation_app/provider/model/config.provider.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,8 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
     switch (_selectedIndex) {
       case 0:
-        Navigator.pushNamed(context, '/home');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FitivationPage()));
         break;
       case 1:
         Navigator.push(

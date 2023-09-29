@@ -1,5 +1,4 @@
 import 'package:fitivation_app/models/bill.model.dart';
-import 'package:fitivation_app/models/cart.model.dart';
 import 'package:flutter/material.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:intl/intl.dart';

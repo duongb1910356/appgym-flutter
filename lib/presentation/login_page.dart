@@ -1,7 +1,9 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:fitivation_app/components/shared/my_button.dart';
 import 'package:fitivation_app/components/shared/my_textfield.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/helper/dialog_helper.dart';
+import 'package:fitivation_app/presentation/complete_account_link.dart';
 import 'package:fitivation_app/presentation/fitivation_page.dart';
 import 'package:fitivation_app/presentation/loading_page.dart';
 import 'package:fitivation_app/presentation/register_page.dart';
@@ -22,6 +24,32 @@ class _LoginState extends State<LoginPage> {
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // initDynamicLinks();
+  }
+
+  // FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+  // Future<void> initDynamicLinks() async {
+  //   dynamicLinks.onLink.listen((dynamicLinkData) {
+  //     print('Met moi');
+
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(
+  //         builder: (context) => CompleteAccountLink(),
+  //       ),
+  //     );
+  //   }).onError((error) {
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(
+  //         builder: (context) => CompleteAccountLink(),
+  //       ),
+  //     );
+  //     print(error.message);
+  //   });
+  // }
 
   void signIn(BuildContext context) async {
     final username = usernameController.text;

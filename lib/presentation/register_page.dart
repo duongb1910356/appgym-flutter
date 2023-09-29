@@ -33,9 +33,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final displayNameController = TextEditingController();
 
-  late String selectedRole = 'ROLE_USER';
+  late Object selectedRole = 'ROLE_USER';
 
-  void handleItemSelected(String newValue) {
+  // late String valueChoose = 'ROLE_USER';
+  List<Object> listItem = ["ROLE_USER", "ROLE_OWNER"];
+
+  void handleItemSelected(Object newValue) {
     selectedRole = newValue;
   }
 
@@ -62,8 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
       _isLoading = true;
     });
 
-    final user = await authService.signUp(
-        context, username, email, password, displayName, selectedRole);
+    final user = await authService.signUp(context, username, email, password,
+        displayName, selectedRole.toString());
     if (user != null) {
       navigateToFitivationPage(context);
     } else {
@@ -155,7 +158,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                MyDropList(onItemSelected: handleItemSelected),
+                // MyDropList(
+                //     valueChoose: selectedRole,
+                //     listItem: listItem,
+                //     onItemSelected: handleItemSelected),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
