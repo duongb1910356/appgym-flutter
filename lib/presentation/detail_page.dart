@@ -69,8 +69,8 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
       });
     });
     Fitivation? temp = await fitivationService.getFitivationById(facilityId);
-    // List<PackageFacility>? tempPackages =
-    //     await packageService.getPackageOfFacilityId(facilityId);
+    List<PackageFacility>? tempPackages =
+        await packageService.getPackageOfFacilityId(facilityId);
     // Schedule? tempSchedule =
     //     await fitivationService.getScheduleByFacilityId(facilityId);
 
@@ -83,9 +83,9 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
     setState(() {
       facility = temp;
     });
-    // setState(() {
-    //   packages = tempPackages;
-    // });
+    setState(() {
+      packages = tempPackages;
+    });
     // setState(() {
     //   schedule = tempSchedule;
     // });
@@ -245,43 +245,43 @@ class _DetailFitivationState extends State<DetailFitivationPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             DetailPackage(packages: packages),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: Row(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     mainAxisAlignment:
-                            //         MainAxisAlignment.spaceAround,
-                            //     children: [
-                            //       Container(
-                            //         margin: EdgeInsets.fromLTRB(0, 0, 39.74, 0),
-                            //         constraints: BoxConstraints(
-                            //           maxWidth: 159,
-                            //         ),
-                            //         child: Text('Gói định kỳ chỉ'),
-                            //       ),
-                            //       Container(
-                            //         margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
-                            //         child: Text(
-                            //           '${packages?[0].basePrice} đồng/tháng',
-                            //           style: const TextStyle(
-                            //               fontSize: 16,
-                            //               fontFamily: 'Poppins',
-                            //               fontWeight: FontWeight.w600,
-                            //               height: 1.5,
-                            //               color: const Color(0xff000000)),
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailPackage(packages: packages),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 39.74, 0),
+                                    constraints: BoxConstraints(
+                                      maxWidth: 159,
+                                    ),
+                                    child: Text('Gói định kỳ chỉ'),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
+                                    child: Text(
+                                      '${packages?[0].basePrice} đồng/tháng',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.5,
+                                          color: const Color(0xff000000)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Text(
                               'Xem thêm >',
                               style: TextStyle(

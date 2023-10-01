@@ -8,9 +8,11 @@ import 'package:fitivation_app/components/shared/my_textfield.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/models/dvhc.model.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
+import 'package:fitivation_app/models/package.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';
 import 'package:fitivation_app/provider/model/address.provider.dart';
 import 'package:fitivation_app/services/fitivation.service.dart';
+import 'package:fitivation_app/services/packagefacility.service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +29,7 @@ class _ModifieFacilityPageState extends State<ModifieFacilityPage> {
   AddressProvider? addressProvider;
   int _activeStepIndex = 0;
   final FitivationService fitivationService = FitivationService();
+  final PackageService packageService = PackageService();
   final GlobalKey<FormState> _formKeyCreateFacility = GlobalKey<FormState>();
   late String? name;
   late String? phone;
@@ -48,6 +51,8 @@ class _ModifieFacilityPageState extends State<ModifieFacilityPage> {
   List<XFile> imageFileList = [];
 
   final packageNameController = TextEditingController();
+  final basePriceController = TextEditingController();
+  final discountController = TextEditingController();
   final streetController = TextEditingController();
 
   Completer<GoogleMapController> mapController = Completer();
@@ -83,9 +88,9 @@ class _ModifieFacilityPageState extends State<ModifieFacilityPage> {
         "phone": phone,
         "describe": describe,
         "address": {
-          "province": province,
-          "district": district,
-          "ward": ward,
+          "province": addressProvider!.level1.name,
+          "district": addressProvider!.level2.name,
+          "ward": addressProvider!.level3.name,
           "street": streetController.text
         },
         "location": {
@@ -99,6 +104,13 @@ class _ModifieFacilityPageState extends State<ModifieFacilityPage> {
       Fitivation? fitivation = await fitivationService.createFacility(formData);
       dynamic result = await fitivationService.uploadImagesFacility(
           fitivation!.id.toString(), imageFileList);
+
+      List<PackageFacility>? packagesFacility =
+          await packageService.createPackage(
+              packageNameController.text,
+              int.tryParse(basePriceController.text)!,
+              discountController.text,
+              fitivation.id.toString());
 
       Navigator.of(context).pop();
     }
@@ -281,11 +293,11 @@ class _ModifieFacilityPageState extends State<ModifieFacilityPage> {
                           hintText: 'Tên gói',
                           obscureText: false),
                       MyTextField(
-                          controller: packageNameController,
+                          controller: basePriceController,
                           hintText: 'Giá cơ bản',
                           obscureText: false),
                       MyTextField(
-                          controller: packageNameController,
+                          controller: discountController,
                           hintText: 'Chiết khấu theo tháng',
                           obscureText: false),
                       Text(
