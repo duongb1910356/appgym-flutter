@@ -45,19 +45,17 @@ class _HistoryBillPageState extends State<HistoryBillPage> {
         backgroundColor: Colors.white,
         toolbarHeight: 70,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-          // child: Column(
-          //   children: [ItemHistory(item: bills![0])],
-          // ),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: bills.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ItemHistory(item: bills[index]);
-            },
-          ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        // child: Column(
+        //   children: [ItemHistory(item: bills![0])],
+        // ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: bills.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ItemHistory(item: bills[index]);
+          },
         ),
       ),
     );

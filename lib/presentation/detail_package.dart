@@ -101,7 +101,7 @@ class DetailPackage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                '${(packages![index].basePrice ?? 0) * ((1 - (packages![index].discount ?? 0)))} / tháng',
+                                '${(packages![index].basePrice ?? 0)} / tháng',
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,

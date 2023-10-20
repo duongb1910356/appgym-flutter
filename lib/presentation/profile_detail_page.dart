@@ -4,11 +4,14 @@ import 'package:fitivation_app/models/user.model.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
 import 'package:fitivation_app/services/user.service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ProfileDetailScreen extends StatelessWidget {
+  final String baseUrlImage = "${dotenv.env['BASE_URL']}/api/file";
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);

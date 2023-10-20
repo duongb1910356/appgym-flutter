@@ -6,6 +6,7 @@ import 'package:dvhcvn/dvhcvn.dart';
 import 'package:fitivation_app/components/shared/my_droplist.dart';
 import 'package:fitivation_app/components/shared/my_textfield.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
+import 'package:fitivation_app/models/dvhc.model.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/models/package.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';
@@ -17,24 +18,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ModifiedFacilityPage extends StatefulWidget {
-  final Fitivation fitivation;
-  const ModifiedFacilityPage({
-    required this.fitivation,
-    super.key,
-  });
+class CreateFacilityPage extends StatefulWidget {
+  const CreateFacilityPage({super.key});
 
   @override
-  State<ModifiedFacilityPage> createState() => _ModifiedFacilityPageState();
+  State<CreateFacilityPage> createState() => _CreateFacilityPageState();
 }
 
-class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
+class _CreateFacilityPageState extends State<CreateFacilityPage> {
   AddressProvider? addressProvider;
   int _activeStepIndex = 0;
   final FitivationService fitivationService = FitivationService();
   final PackageService packageService = PackageService();
   final GlobalKey<FormState> _formKeyCreateFacility = GlobalKey<FormState>();
-
   late String? name;
   late String? phone;
   late String? email;
@@ -44,12 +40,12 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
   late String? district = addressProvider!.level2.name;
   late String? ward = addressProvider!.level3.name;
 
-  // late String valueProvinceChoose = level1s[0].name;
-  // List<String> listItemProvince = level1s.map((e) => e.name).toList();
+  late String valueProvinceChoose = level1s[0].name;
+  List<String> listItemProvince = level1s.map((e) => e.name).toList();
 
-  // late String valueDistrictChoose = "Quận Ba Đình";
-  // List<String> listItemDistrict =
-  //     dvhcvn.findLevel1ById("01")!.children.map((e) => e.name).toList();
+  late String valueDistrictChoose = "Quận Ba Đình";
+  List<String> listItemDistrict =
+      dvhcvn.findLevel1ById("01")!.children.map((e) => e.name).toList();
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
@@ -139,7 +135,7 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        initialValue: widget.fitivation.name,
+                        // initialValue: userProvider.user?.displayName,
                         onSaved: (value) {
                           name = value!;
                         },
@@ -156,7 +152,7 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
                         height: 15,
                       ),
                       TextFormField(
-                        initialValue: widget.fitivation.phone,
+                        // initialValue: userProvider.user?.phone,
                         onSaved: (value) {
                           phone = value!;
                         },
@@ -173,13 +169,30 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
                         height: 15,
                       ),
                       TextFormField(
-                        initialValue: widget.fitivation.describe,
+                        // initialValue: userProvider.user?.phone,
                         onSaved: (value) {
                           describe = value!;
                         },
                         decoration: const InputDecoration(
                           label: Text('Mô tả'),
                           prefixIcon: Icon(Icons.description_rounded),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50))),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        // initialValue: userProvider.user?.phone,
+                        onSaved: (value) {
+                          email = value!;
+                        },
+                        decoration: const InputDecoration(
+                          label: Text('Email'),
+                          prefixIcon: Icon(Icons.email_outlined),
                           border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                               borderRadius:
@@ -375,7 +388,6 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
               steps: stepList(),
               onStepContinue: () async {
                 if (_activeStepIndex == (stepList().length - 1)) {
-                  print("da toi buoc cuoi");
                   await _submitCreateFacility();
                 }
                 if (_activeStepIndex < (stepList().length - 1)) {

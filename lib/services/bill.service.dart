@@ -14,7 +14,6 @@ class BillService {
       String endpoint = '$baseUrl/me';
       List<Bill>? bills = [];
 
-      print("endpoint bill $endpoint");
       final Response response = await api.get(endpoint);
       final jsonData = response.data;
 
@@ -26,6 +25,20 @@ class BillService {
       return bills;
     } catch (ex) {
       print('Error get bills of me: ${ex}');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> satifiedIncome() async {
+    try {
+      String endpoint = '$baseUrl/satisfied/bills';
+
+      final Response response = await api.get(endpoint);
+      final jsonData = response.data;
+
+      return jsonData;
+    } catch (ex) {
+      print('Error satisfied bills of me: ${ex}');
       return null;
     }
   }

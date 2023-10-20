@@ -17,7 +17,7 @@ class PaymentService {
       String endpoint = '$baseUrl/create_payment_intent';
       print("endpoint $endpoint customerId: $customerId");
       final Response response = await api.post(endpoint, requestParams: {
-        'amount': 10000,
+        'amount': amount,
         'currency': currency,
         'customerId': customerId
       });

@@ -6,7 +6,8 @@ import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/models/accountlink.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';
 import 'package:fitivation_app/presentation/complete_account_link.dart';
-import 'package:fitivation_app/presentation/manager/managerfacilitypage.dart';
+import 'package:fitivation_app/presentation/manager/detailmanagerfacilitypage.dart';
+import 'package:fitivation_app/presentation/manager/satisfiedpage.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
 import 'package:fitivation_app/services/payment.service.dart';
 import 'package:flutter/material.dart';
@@ -142,7 +143,7 @@ class _ManagerFacilityPageState extends State<ManagerFacilityPage> {
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => ManagerFacility(),
+                  builder: (context) => DetailManagerFacilityPage(),
                 ),
               );
             },
@@ -153,7 +154,13 @@ class _ManagerFacilityPageState extends State<ManagerFacilityPage> {
           ManagerMenuComponent(
               title: 'Thống kê',
               icon: IconData(0xebef, fontFamily: 'MaterialIcons'),
-              onTap: () {}),
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SatisfiedPage(),
+                  ),
+                );
+              }),
           SizedBox(
             height: 10,
           ),

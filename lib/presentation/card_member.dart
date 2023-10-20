@@ -45,18 +45,14 @@ class _CardMemberPageState extends State<CardMemberPage> {
         backgroundColor: Colors.white,
         toolbarHeight: 70,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: subscriptions.length,
-            itemBuilder: (BuildContext context, int index) {
-              return CardMemberDetail(
-                subsciption: subscriptions[index],
-              );
-            },
-          ),
-        ),
+      body: ListView.builder(
+        shrinkWrap: true,
+        itemCount: subscriptions.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CardMemberDetail(
+            subsciption: subscriptions[index],
+          );
+        },
       ),
       bottomNavigationBar: MyBottomNavigationBar(originState: 1),
     );

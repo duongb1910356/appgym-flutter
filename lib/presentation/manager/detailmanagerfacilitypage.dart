@@ -3,18 +3,23 @@ import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';
-import 'package:fitivation_app/presentation/manager/ModifieFacilityPage.dart';
+import 'package:fitivation_app/presentation/detail_package.dart';
+import 'package:fitivation_app/presentation/detail_page.dart';
+import 'package:fitivation_app/presentation/login_page.dart';
+import 'package:fitivation_app/presentation/manager/createfacilitypage.dart';
+import 'package:fitivation_app/presentation/manager/modifiefacilitypage.dart';
 import 'package:fitivation_app/provider/model/user.provider.dart';
 import 'package:fitivation_app/services/fitivation.service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ManagerFacility extends StatefulWidget {
+class DetailManagerFacilityPage extends StatefulWidget {
   @override
-  State<ManagerFacility> createState() => _ManagerFacilityState();
+  State<DetailManagerFacilityPage> createState() =>
+      _DetailManagerFacilityState();
 }
 
-class _ManagerFacilityState extends State<ManagerFacility> {
+class _DetailManagerFacilityState extends State<DetailManagerFacilityPage> {
   final FitivationService fitivationService = FitivationService();
   List<Fitivation>? faclities;
 
@@ -25,7 +30,6 @@ class _ManagerFacilityState extends State<ManagerFacility> {
   }
 
   Future<List<Fitivation>?> _initializeData() async {
-    print("chuan bi goi manger fitivation day");
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<Fitivation>? temp =
         await fitivationService.getFacilitiesByOwnerId(userProvider.user!.id!);
@@ -83,17 +87,23 @@ class _ManagerFacilityState extends State<ManagerFacility> {
               return CircularProgressIndicator(); // Ví dụ: Hiển thị vòng tròn tiến trình
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.data == null || snapshot.data!.isEmpty) {
-                // Xử lý trường hợp dữ liệu trống
                 return Center(child: Text('Không có dữ liệu.'));
               } else {
-                // Trả về Widget chứa dữ liệu sau khi Future hoàn thành
-                // Ví dụ: Trả về ListView chứa dữ liệu
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    // Tạo Widget cho mỗi phần tử dữ liệu
                     return ItemComponent(
-                        item: snapshot.data![index], onTap: () {});
+                        item: snapshot.data![index],
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailFitivationPage(
+                                  facilityId:
+                                      snapshot.data![index].id.toString()),
+                            ),
+                          );
+                        });
                   },
                 );
               }
@@ -109,7 +119,7 @@ class _ManagerFacilityState extends State<ManagerFacility> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ModifieFacilityPage(),
+              builder: (context) => CreateFacilityPage(),
             ),
           );
         },
