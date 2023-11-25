@@ -8,8 +8,13 @@ class BarData {
   List<ChartData> chartData = [];
 
   void initDataChart() {
-    rawData.forEach((key, value) {
-      chartData.add(ChartData(key, value));
-    });
+    try {
+      rawData.forEach((key, value) {
+        chartData.add(ChartData(key, value));
+      });
+    } catch (e) {
+      print("Error init data chart ${e}");
+      return null;
+    }
   }
 }

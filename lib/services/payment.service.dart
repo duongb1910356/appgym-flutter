@@ -11,15 +11,16 @@ class PaymentService {
 
   PaymentService();
 
-  Future<dynamic> createPaymentIntentService(
-      int amount, String currency, String customerId) async {
+  Future<dynamic> createPaymentIntentService(int amount, String currency,
+      String customerId, String timeRegister) async {
     try {
       String endpoint = '$baseUrl/create_payment_intent';
       print("endpoint $endpoint customerId: $customerId");
       final Response response = await api.post(endpoint, requestParams: {
         'amount': amount,
         'currency': currency,
-        'customerId': customerId
+        'customerId': customerId,
+        'timeRegister': timeRegister
       });
       final jsonData = response.data;
       return jsonData;

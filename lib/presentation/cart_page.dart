@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:fitivation_app/components/cart_item.dart';
 import 'package:fitivation_app/components/header_homepage.dart';
@@ -15,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -26,6 +25,14 @@ class CartPage extends StatefulWidget {
 class _CartState extends State<CartPage> {
   final CartService cartService = CartService();
   final PaymentService paymentService = PaymentService();
+  String? timeRegister = '6am - 9am';
+
+  void updateTimeRegister(String newvalue) {
+    setState(() {
+      timeRegister = newvalue;
+    });
+    print("da cap nhat ngay ${timeRegister}");
+  }
 
   bool _ready = false;
   late Cart? cart;
@@ -72,7 +79,7 @@ class _CartState extends State<CartPage> {
           await paymentService.getEphemeralKey(customerId!);
 
       final data = await paymentService.createPaymentIntentService(
-          amount, currency, customerId);
+          amount, currency, customerId, timeRegister!);
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -100,6 +107,7 @@ class _CartState extends State<CartPage> {
       await initPaymentSheet(cart?.totalPrice ?? 0, 'vnd');
       await Stripe.instance.presentPaymentSheet();
       Cart? cartTemp = await cartService.deleteAllItemfromCart();
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Payment succesfully completed'),
@@ -149,23 +157,25 @@ class _CartState extends State<CartPage> {
               child: Column(
                 children: [
                   Container(
-                      child: ConditionalBuilder(
-                          condition: (cart == null || cart?.items?.length == 0),
-                          builder: (context) =>
-                              Center(child: Text('Chưa có dữ liệu')),
-                          fallback: (context) => ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: cart?.items?.length,
-                                itemBuilder: (context, index) {
-                                  return CartItem(
-                                    item: cart!.items![index],
-                                    deleteItemFromCart: () {
-                                      deleteItemFromCart(
-                                          context, cart!.items![index].id!);
-                                    },
-                                  );
-                                },
-                              ))),
+                    child: ConditionalBuilder(
+                        condition: (cart == null || cart?.items?.length == 0),
+                        builder: (context) =>
+                            Center(child: Text('Chưa có dữ liệu')),
+                        fallback: (context) => ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: cart?.items?.length,
+                              itemBuilder: (context, index) {
+                                return CartItem(
+                                  item: cart!.items![index],
+                                  deleteItemFromCart: () {
+                                    deleteItemFromCart(
+                                        context, cart!.items![index].id!);
+                                  },
+                                  handleTimeRegister: updateTimeRegister,
+                                );
+                              },
+                            )),
+                  ),
                   Divider(
                     thickness: 3,
                   ),

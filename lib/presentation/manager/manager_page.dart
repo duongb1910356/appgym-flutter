@@ -24,7 +24,7 @@ class _ManagerFacilityPageState extends State<ManagerFacilityPage> {
   int _currentIndex = 0;
 
   void redirectToAccountLink(String url) async {
-    String accountLinkURL = url; // Đặt URL của tài khoản của bạn ở đây
+    String accountLinkURL = url;
     print("chuan bi mo url $accountLinkURL");
 
     if (await canLaunchUrlString(accountLinkURL)) {

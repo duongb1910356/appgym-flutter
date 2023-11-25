@@ -30,4 +30,16 @@ class SubscriptionService {
       return null;
     }
   }
+
+  Future<dynamic> getSubscriptionWithTerm(String packageId) async {
+    try {
+      String endpoint = '$baseUrl/statistical_term/$packageId';
+      final Response response = await api.get(endpoint);
+      final jsonData = response.data;
+      return jsonData;
+    } catch (ex) {
+      print("Error get getSubscriptionWithTerm: ${ex}");
+      return null;
+    }
+  }
 }

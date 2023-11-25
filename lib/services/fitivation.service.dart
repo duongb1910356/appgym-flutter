@@ -56,6 +56,23 @@ class FitivationService {
     }
   }
 
+  Future<Fitivation?> deleteFitivationById(String id) async {
+    try {
+      String endpoint = '$baseUrl/delete/$id';
+      Fitivation? facility;
+      final Response response = await api.delete(endpoint);
+      final jsonData = response.data;
+
+      if (jsonData != null) {
+        facility = Fitivation.fromJson(jsonData);
+      }
+      return facility;
+    } catch (ex) {
+      print('Error delete facility by id: ${ex}');
+      return null;
+    }
+  }
+
   Future<List<Fitivation>?> getFacilitiesByOwnerId(String id) async {
     try {
       String endpoint = '$baseUrl/owner/$id';
@@ -78,14 +95,32 @@ class FitivationService {
     }
   }
 
+  Future<Map<String, dynamic>?>
+      getSubscriptionsCountByFacilityOwnedByUser() async {
+    try {
+      String endpoint = '$baseUrl/statistic/subscription';
+      final Response response = await api.get(endpoint);
+      final jsonData = response.data;
+
+      return jsonData;
+    } catch (ex) {
+      print(
+          'Error getSubscriptionsCountByFacilityOwnedByUser by owner id: ${ex}');
+      return null;
+    }
+  }
+
   Future<List<Fitivation>?> getNearByFacilities(
-      BuildContext context, double longtitude, double latitude) async {
+      BuildContext context, double longtitude, double latitude,
+      {String? sortBy = "distance"}) async {
     try {
       String endpoint = '$baseUrl/get_nearby_facilities';
       List<Fitivation> fitivations = [];
+
       Map<String, dynamic> queryParam = {
         "longtitude": longtitude,
-        "latitude": latitude
+        "latitude": latitude,
+        "sortby": sortBy,
       };
 
       final Response response =

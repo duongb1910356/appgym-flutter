@@ -6,13 +6,19 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ItemComponent extends StatelessWidget {
   final Fitivation item; // Định nghĩa tham số item
   final Function() onTap;
+  final Function() onLongPress;
 
-  ItemComponent({required this.item, required this.onTap});
+  ItemComponent({
+    required this.item,
+    required this.onTap,
+    required this.onLongPress,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
         width: MediaQuery.of(context).size.width,

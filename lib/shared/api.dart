@@ -29,6 +29,16 @@ class API {
     }
   }
 
+  Future<Response> delete(String endpoint) async {
+    try {
+      final response = await _dio.delete(endpoint);
+      return response;
+    } catch (error) {
+      print('Error dio call API: $error');
+      throw error;
+    }
+  }
+
   Future<Response> post(String endpoint,
       {Map<String, dynamic>? body, Map<String, dynamic>? requestParams}) async {
     try {

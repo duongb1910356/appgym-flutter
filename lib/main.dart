@@ -25,24 +25,24 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await dotenv.load();
-  // ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
-  //       body: Center(
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             FractionallySizedBox(
-  //               widthFactor: 1.0 / 3.0,
-  //               child: Align(
-  //                 alignment: Alignment.center,
-  //                 child: Image.asset('lib/assets/empty.png'),
-  //               ),
-  //             ),
-  //             Text('Có lỗi xảy ra. Vui lòng quay lại!'),
-  //           ],
-  //         ),
-  //       ),
-  //     );
+  ErrorWidget.builder = (FlutterErrorDetails details) => Scaffold(
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FractionallySizedBox(
+                widthFactor: 1.0 / 3.0,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Image.asset('lib/assets/empty.png'),
+                ),
+              ),
+              Text('Có lỗi xảy ra. Vui lòng quay lại!'),
+            ],
+          ),
+        ),
+      );
   Stripe.publishableKey = dotenv.env['PUBLIC_KEY_STRIPE']!;
   runApp(MyApp());
 }

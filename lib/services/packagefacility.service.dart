@@ -29,8 +29,8 @@ class PackageService {
     }
   }
 
-  Future<List<PackageFacility>?> createPackage(String packageName,
-      int basePrice, String discount, String facilityId) async {
+  Future<void> createPackage(String packageName, int basePrice, String discount,
+      String facilityId) async {
     try {
       String endpoint = '$baseUrl/create';
       List<PackageFacility>? list = [];
@@ -58,12 +58,12 @@ class PackageService {
       final Response response = await api.post(endpoint, body: formData);
       final jsonData = response.data;
 
-      if (jsonData != null) {
-        final List<dynamic> tempList = jsonData;
-        list = tempList.map((item) => PackageFacility.fromJson(item)).toList();
-      }
+      // if (jsonData != null) {
+      //   final List<dynamic> tempList = jsonData;
+      //   list = tempList.map((item) => PackageFacility.fromJson(item)).toList();
+      // }
 
-      return list;
+      // return list;
     } catch (ex) {
       print('Error create package ${ex}');
       return null;

@@ -1,5 +1,5 @@
 class ChartData {
   final String x;
-  final double y;
+  final num y;
   ChartData(this.x, this.y);
 }

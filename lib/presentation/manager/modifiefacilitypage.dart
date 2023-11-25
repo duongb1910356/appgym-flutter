@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dvhcvn/dvhcvn.dart' as dvhcvn;
 import 'package:dvhcvn/dvhcvn.dart';
 import 'package:fitivation_app/components/shared/my_droplist.dart';
 import 'package:fitivation_app/components/shared/my_textfield.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
+import 'package:fitivation_app/helper/dialog_helper.dart';
 import 'package:fitivation_app/models/fitivation.model.dart';
 import 'package:fitivation_app/models/package.model.dart';
 import 'package:fitivation_app/presentation/cart_page.dart';
@@ -77,6 +79,7 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
 
   Future<void> _submitCreateFacility() async {
     if (_formKeyCreateFacility.currentState!.validate()) {
+      print("goi tao facilitu");
       showDialog(
           context: context,
           builder: (context) {
@@ -109,14 +112,13 @@ class _ModifiedFacilityPageState extends State<ModifiedFacilityPage> {
       dynamic result = await fitivationService.uploadImagesFacility(
           fitivation!.id.toString(), imageFileList);
 
-      List<PackageFacility>? packagesFacility =
-          await packageService.createPackage(
-              packageNameController.text,
-              int.tryParse(basePriceController.text)!,
-              discountController.text,
-              fitivation.id.toString());
+      packageService.createPackage(
+          packageNameController.text,
+          int.tryParse(basePriceController.text)!,
+          discountController.text,
+          fitivation.id.toString());
 
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     }
   }
 

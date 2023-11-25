@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dvhcvn/dvhcvn.dart' as dvhcvn;
 import 'package:dvhcvn/dvhcvn.dart';
 import 'package:fitivation_app/components/shared/my_droplist.dart';
@@ -105,12 +106,12 @@ class _CreateFacilityPageState extends State<CreateFacilityPage> {
       dynamic result = await fitivationService.uploadImagesFacility(
           fitivation!.id.toString(), imageFileList);
 
-      List<PackageFacility>? packagesFacility =
-          await packageService.createPackage(
-              packageNameController.text,
-              int.tryParse(basePriceController.text)!,
-              discountController.text,
-              fitivation.id.toString());
+      // List<PackageFacility>? packagesFacility =
+      await packageService.createPackage(
+          packageNameController.text,
+          int.tryParse(basePriceController.text)!,
+          discountController.text,
+          fitivation.id.toString());
 
       Navigator.of(context).pop();
     }
@@ -389,6 +390,12 @@ class _CreateFacilityPageState extends State<CreateFacilityPage> {
               onStepContinue: () async {
                 if (_activeStepIndex == (stepList().length - 1)) {
                   await _submitCreateFacility();
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.success,
+                    title: 'Đã tạo phòng tập',
+                    btnOkOnPress: () {},
+                  ).show();
                 }
                 if (_activeStepIndex < (stepList().length - 1)) {
                   _activeStepIndex += 1;

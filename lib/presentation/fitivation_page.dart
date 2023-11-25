@@ -23,6 +23,7 @@ class FitivationPage extends StatefulWidget {
 }
 
 class _FitivationState extends State<FitivationPage> {
+  String sortBy = "distance";
   late double lat;
   late double long;
   late List<Fitivation>? items = [];
@@ -47,6 +48,14 @@ class _FitivationState extends State<FitivationPage> {
     // Lấy danh sách cơ sở gần đây và cập nhật trạng thái của widget
     final result =
         await fitivationService.getNearByFacilities(context, long, lat);
+    setState(() {
+      items = result;
+    });
+  }
+
+  Future<void> handlesortBy(String sortBy) async {
+    final result = await fitivationService
+        .getNearByFacilities(context, long, lat, sortBy: sortBy);
     setState(() {
       items = result;
     });
@@ -113,17 +122,59 @@ class _FitivationState extends State<FitivationPage> {
         backgroundColor: Colors.white,
         toolbarHeight: 70,
       ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        child: ListView.builder(
-            itemCount: items?.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ItemComponent(
-                  item: items![index],
-                  onTap: () {
-                    onTapItemComponent(items![index]);
-                  });
-            }),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sắp xếp theo >",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        height: 1.5,
+                        color: const Color(0xff000000)),
+                  ),
+                  DropdownButton<String?>(
+                    value: sortBy,
+                    items: <String>[
+                      'distance',
+                      'rate',
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        sortBy = newValue!;
+                      });
+                      print("chaun bi goi sort ${sortBy}");
+                      handlesortBy(sortBy);
+                    },
+                  ),
+                ],
+              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: items?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ItemComponent(
+                      item: items![index],
+                      onTap: () {
+                        onTapItemComponent(items![index]);
+                      },
+                      onLongPress: () {},
+                    );
+                  })
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: MyBottomNavigationBar(
         originState: 0,

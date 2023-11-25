@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fitivation_app/components/item_component.dart';
 import 'package:fitivation_app/components/my_bottom_navigator_bar.dart';
 import 'package:fitivation_app/components/shared/square_tile.dart';
@@ -93,17 +94,32 @@ class _DetailManagerFacilityState extends State<DetailManagerFacilityPage> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ItemComponent(
-                        item: snapshot.data![index],
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailFitivationPage(
-                                  facilityId:
-                                      snapshot.data![index].id.toString()),
-                            ),
-                          );
-                        });
+                      item: snapshot.data![index],
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailFitivationPage(
+                                facilityId:
+                                    snapshot.data![index].id.toString()),
+                          ),
+                        );
+                      },
+                      onLongPress: () {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.question,
+                          title: 'Bạn có chắc xoá?',
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () async {
+                            await fitivationService.deleteFitivationById(
+                                snapshot.data![index].id.toString());
+                            snapshot.data!.removeAt(index);
+                            setState(() {});
+                          },
+                        ).show();
+                      },
+                    );
                   },
                 );
               }
